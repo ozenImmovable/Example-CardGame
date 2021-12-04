@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
 public class ThisCard : MonoBehaviour
 {
     public List<Card> thisCard = new List<Card>();
@@ -37,15 +38,15 @@ public class ThisCard : MonoBehaviour
     public GameObject battleZone;
 
     //trying to solve a null objectr reference for the call to Turnsystem.currentMana
-    //public GameObject TurnSystem = GameObject.Find("TurnSystem").GetComponent<Turn System>();
+    public GameObject turnobject;
     //Solved...need to review, forgot how
 
-/*    public static int drawX;
-    public int drawXcards;
-    public int addXmaxMana;*/
+        public static int drawX;
+        public int drawXcards;
+        public int addXmaxMana;
 
 
-
+    //public GameObject TurnObject;
 
 
     
@@ -60,13 +61,14 @@ public class ThisCard : MonoBehaviour
         canBeSummon = false;
         summoned = false;
 
-       /* drawX = 0;*/
+        drawX = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
+
         Hand = GameObject.Find("Hand Panel");
         if (this.transform.parent == Hand.transform.parent)
         {
@@ -81,8 +83,8 @@ public class ThisCard : MonoBehaviour
 
         thisSprite = thisCard[0].thisImage;
 
-/*        drawXcards = thisCard[0].drawXcards;
-        addXmaxMana = thisCard[0].addXmaxMana;*/
+        drawXcards = thisCard[0].drawXcards;
+        addXmaxMana = thisCard[0].addXmaxMana;
 
         nameText.text = "" + cardName;
         costText.text = "" + cost;
@@ -103,9 +105,9 @@ public class ThisCard : MonoBehaviour
             cardBack = false;
             this.tag = "Untagged";
         }
-       
-        //Conditional: cards can not be played if you dont have enough mana
-        if(TurnSystem.currentMana >= cost && summoned == false)
+
+    //Conditional: cards can not be played if you dont have enough mana
+        if (TurnSystem.currentMana >= cost && summoned == false)
         {
             canBeSummon = true;
         }
@@ -115,7 +117,7 @@ public class ThisCard : MonoBehaviour
         }
 
         //Conditional: cards are draggable if you have enough mana to play them
-        if(canBeSummon == true)
+        if (canBeSummon == true)
         {
             gameObject.GetComponent<Draggable>().enabled = true;
         }
@@ -125,7 +127,7 @@ public class ThisCard : MonoBehaviour
         }
 
         battleZone = GameObject.Find("Dropzone");
-
+        //TurnObject = GameObject.Find("TurnSystem");
         //Conditional: calls the SUMMON function if a card has been dragged onto the dropzone gameobject
         if(summoned == false && this.transform.parent == battleZone.transform)
         {
@@ -140,13 +142,13 @@ public class ThisCard : MonoBehaviour
         TurnSystem.currentMana -= cost;
         summoned = true;
 
-/*        MaxMana(addXmaxMana);
-        drawX = drawXcards;*/
+        MaxMana(addXmaxMana);
+        drawX = drawXcards;
 
     }
 
-    /*public void MaxMana(int x)
+    public void MaxMana(int x)
     {
         TurnSystem.maxMana += x;
-    }*/
+    }
 }

@@ -192,6 +192,9 @@ MonoBehaviour:
   cardBack: 0
   Hand: {fileID: 0}
   numberOfCardsInDeck: 0
+  canBeSummon: 0
+  summoned: 0
+  battleZone: {fileID: 0}
 --- !u!114 &6311986156969592555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToReturnTo: {fileID: 0}
+  placeholderParent: {fileID: 0}
 --- !u!225 &3259665752402722206
 CanvasGroup:
   m_ObjectHideFlags: 0

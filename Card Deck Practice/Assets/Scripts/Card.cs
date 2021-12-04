@@ -13,8 +13,8 @@ public class Card
     public int power;
     public string cardDescription;
 
-/*    public int drawXcards;
-    public int addXmaxMana;*/
+    public int drawXcards;
+    public int addXmaxMana;
     public Sprite thisImage;
 
 
@@ -23,7 +23,7 @@ public class Card
     
     }
 
-    public Card(int Id, string CardName, int Cost, int Power, string CardDescription, Sprite ThisImage/*, int DrawXcards, int AddXmaxMana*/)
+    public Card(int Id, string CardName, int Cost, int Power, string CardDescription, Sprite ThisImage, int DrawXcards, int AddXmaxMana)
     {
         id = Id;
         cardName = CardName;
@@ -33,7 +33,7 @@ public class Card
 
         thisImage = ThisImage;
 
-        /*drawXcards = DrawXcards;
-        addXmaxMana = AddXmaxMana;*/
+        drawXcards = DrawXcards;
+        addXmaxMana = AddXmaxMana;
     }
 }

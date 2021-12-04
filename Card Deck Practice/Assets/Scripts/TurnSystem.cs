@@ -13,13 +13,13 @@ public class TurnSystem : MonoBehaviour
 
     public Text turnText;
 
-    public /*static*/ int maxMana;
+    public static int maxMana;
 
     //made currentMana static, because ThisCard was having trouble accessing it, this apparently might not be the best solution
     //need to figure out how to properly reference it from this card (object reference)/public gameObject variable???
     //remove STATIC from this variable to see errors
     //applied same solution to maxMana above this comment block
-    public /*static*/ int currentMana;
+    public static int currentMana;
     public Text manaText;
 
     // Start is called before the first frame update

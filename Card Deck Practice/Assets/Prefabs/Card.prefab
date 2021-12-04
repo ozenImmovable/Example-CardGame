@@ -779,7 +779,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007266760903768920}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5888dd55ddff15a41b8245caf28019d1, type: 3}
   m_Name: 
@@ -804,6 +804,12 @@ MonoBehaviour:
   thisSprite: {fileID: 0}
   thatImage: {fileID: 1007266760700394847}
   cardBack: 0
+  Hand: {fileID: 0}
+  numberOfCardsInDeck: 0
+  canBeSummon: 0
+  summoned: 0
+  battleZone: {fileID: 0}
+  turnobject: {fileID: 0}
 --- !u!114 &2873009516439299826
 MonoBehaviour:
   m_ObjectHideFlags: 0
