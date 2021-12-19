@@ -79,11 +79,18 @@ public class PlayerDeck : MonoBehaviour
         }
 
         //calls coroutine to draw cards
-        /*if(ThisCard.drawX > 0)
+        if(ThisCard.drawX > 0)
         {
             StartCoroutine(Draw(ThisCard.drawX));
             ThisCard.drawX = 0;
-        }*/
+        }
+
+        if(TurnSystem.startTurn == true)
+        {
+            StartCoroutine(Draw(1));
+            TurnSystem.startTurn = false;
+
+        }
     }
 
     
@@ -129,13 +136,13 @@ public class PlayerDeck : MonoBehaviour
         timeWhenDisappear = Time.time + timeToAppear;
     }
 
-    /*IEnumerator Draw(int x)
+    IEnumerator Draw(int x)
     {
-        for (int i = 1; i < x; i++)
+        for (int i = 0; i < x; i++)
         {
             yield return new WaitForSeconds(1);
             Instantiate(CardToHand, transform.position, transform.rotation);
         }
-    }*/
+    }
     
 }
