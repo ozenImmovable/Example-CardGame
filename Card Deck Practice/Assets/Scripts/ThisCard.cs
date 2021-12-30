@@ -48,7 +48,8 @@ public class ThisCard : MonoBehaviour
 
     //public GameObject TurnObject;
 
-
+    //cardtype storage variable
+    public string cardType;
     
     // Start is called before the first frame update
     void Start()
@@ -91,6 +92,15 @@ public class ThisCard : MonoBehaviour
         powerText.text = "" + power;
         descriptionText.text = "" + cardDescription;
 
+        //cardtype initializing and storage, case might go here
+
+        //need to populate conditionally based off card id and type?
+        //maybe just off card id?
+        //is it even necessary to have multiple databases?
+
+
+        cardType = thisCard[0].cardType;                            /////////////////////////////
+        
 
         thatImage.sprite = thisSprite;
 

@@ -17,13 +17,18 @@ public class Card
     public int addXmaxMana;
     public Sprite thisImage;
 
+    //public bool ally;
+    //public bool material;
+    //public bool spell;
+
+    public string cardType;
 
     public Card()
     {
     
     }
 
-    public Card(int Id, string CardName, int Cost, int Power, string CardDescription, Sprite ThisImage, int DrawXcards, int AddXmaxMana)
+    public Card(int Id, string CardName, int Cost, int Power, string CardDescription, Sprite ThisImage, int DrawXcards, int AddXmaxMana, string Cardtype)
     {
         id = Id;
         cardName = CardName;
@@ -35,5 +40,9 @@ public class Card
 
         drawXcards = DrawXcards;
         addXmaxMana = AddXmaxMana;
+
+        cardType = Cardtype;
+
+
     }
 }
