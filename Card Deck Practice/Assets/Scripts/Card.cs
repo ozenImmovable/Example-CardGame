@@ -28,7 +28,7 @@ public class Card
     
     }
 
-    public Card(int Id, string CardName, int Cost, int Power, string CardDescription, Sprite ThisImage, int DrawXcards, int AddXmaxMana, string Cardtype)
+    public Card(int Id, string Cardtype, string CardName, int Cost, int Power, string CardDescription, Sprite ThisImage, int DrawXcards, int AddXmaxMana )
     {
         id = Id;
         cardName = CardName;

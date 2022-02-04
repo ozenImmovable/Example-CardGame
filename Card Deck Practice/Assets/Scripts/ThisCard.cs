@@ -26,9 +26,9 @@ public class ThisCard : MonoBehaviour
     //public Image frame; Only if  I want to change the frame color (Tutorial #04)
     public bool cardBack;
     //public static bool staticCardBack; //removed due to card linking
-    
+
     CardBack CardBackScript;
-    
+
     public GameObject Hand;
     public int numberOfCardsInDeck;
 
@@ -37,45 +37,71 @@ public class ThisCard : MonoBehaviour
     public bool summoned;
     public GameObject battleZone;
 
-    //trying to solve a null objectr reference for the call to Turnsystem.currentMana
-    public GameObject turnobject;
-    //Solved...need to review, forgot how
 
-        public static int drawX;
-        public int drawXcards;
-        public int addXmaxMana;
+    public GameObject turnobject;
+
+
+    public static int drawX;
+    public int drawXcards;
+    public int addXmaxMana;
 
 
     //public GameObject TurnObject;
 
     //cardtype storage variable
     public string cardType;
-    
+
+    //Graveyard initialization and card destroying variables
+    public bool canBeDestroyed;
+    public GameObject DiscardZone;
+    public bool beInDiscardZone;
+
+    //initialization variables for playing cards////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public GameObject Target;
+    public GameObject PlayZone;
+
+    public static bool staticTargeting;
+    public static bool staticTargetingPlayZone;
+
+    public bool targeting;
+    public bool targetingPlayZone;
+
+    //not sure if below variable is needed
+    public bool onlyThisCardPlay;
+
+    public GameObject summonBorder;
+
+
     // Start is called before the first frame update
     void Start()
     {
         CardBackScript = GetComponent<CardBack>(); //part of the cardback linking solution
         thisCard[0] = CardDataBase.cardList[thisId];
-        
+
         numberOfCardsInDeck = PlayerDeck.deckSize;
 
         canBeSummon = false;
         summoned = false;
 
         drawX = 0;
+
+        targeting = false;
+        targetingPlayZone = false;
+
+        PlayZone = GameObject.Find("PlayZone");
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
 
         Hand = GameObject.Find("Hand Panel");
         if (this.transform.parent == Hand.transform.parent)
         {
             cardBack = false;
         }
-        
+
         id = thisCard[0].id;
         cardName = thisCard[0].cardName;
         cost = thisCard[0].cost;
@@ -100,14 +126,14 @@ public class ThisCard : MonoBehaviour
 
 
         cardType = thisCard[0].cardType;                            /////////////////////////////
-        
+
 
         thatImage.sprite = thisSprite;
 
         //staticCardBack = cardBack; //removed due to card linking
         CardBackScript.UpdateCard(cardBack);
-        
-        if(this.tag == "Clone")
+
+        if (this.tag == "Clone")
         {
             thisCard[0] = PlayerDeck.staticDeck[numberOfCardsInDeck - 1];
             numberOfCardsInDeck -= 1;
@@ -116,8 +142,8 @@ public class ThisCard : MonoBehaviour
             this.tag = "Untagged";
         }
 
-    //Conditional: cards can not be played if you dont have enough mana
-        if (TurnSystem.currentMana >= cost && summoned == false)
+        //Conditional: cards can not be played if you dont have enough mana
+        if (TurnSystem.currentMana >= cost && summoned == false && beInDiscardZone == false)
         {
             canBeSummon = true;
         }
@@ -139,14 +165,87 @@ public class ThisCard : MonoBehaviour
         battleZone = GameObject.Find("Dropzone");
         //TurnObject = GameObject.Find("TurnSystem");
         //Conditional: calls the SUMMON function if a card has been dragged onto the dropzone gameobject
-        if(summoned == false && this.transform.parent == battleZone.transform)
+        if (summoned == false && this.transform.parent == battleZone.transform)
         {
             Summon();
         }
-       
 
+        //NEW: switch statement
+
+        //copied if statement from directly above in order to check if the card is being moved around from the hand zone to somewhre else
+        //if (summoned == false && modified== false && casted == false && this.transform.parent == battleZone.transform)
+        //{
+        //    Summon();
+        //}
+
+        //maybe use arguments to tell which card it is by its ID? is that redundant, discussion required
+        //switch (cardType)
+        //{
+        //    case "ally":
+        //        Debug.Log("ENTERED ALLY CASE");
+        //        if (summoned == true && Input.GetMouseButtonUp(0))
+        //        {
+        //            Destroy();
+        //        }
+        //        break;
+        //    case "material":
+        //        Debug.Log("ENTERED MATERIAL CASE");
+        //        break;
+        //    case "spell":
+        //        Debug.Log("ENTERED SPELL CASE");
+        //        break;
+
+        //}
+        targeting = staticTargeting;
+
+        targetingPlayZone = staticTargetingPlayZone;
+
+        //determines if the cards target is a playzone
+        if (targetingPlayZone == true)
+        {
+            Target = PlayZone;
+        } else
+        {
+            Target = null;
+        }
+
+        //determines if the summoning border is active------------------------------------------------------------------------------------------------
+        if (canBeSummon == true)
+        {
+            summonBorder.SetActive(true);
+        } else
+        {
+            summonBorder.SetActive(false);
+        }
+
+        //this allows the card to be played from the Dropzone to a playzone
+        if (targeting == true && targetingPlayZone == true && onlyThisCardPlay == true)
+        {
+            Play();
+        }
+
+        if (targeting == false && Target == PlayZone)
+        {
+            Destroy();
+        }
     }
-    
+
+    //This function is what allows a card to be played from the dropzone to the playzone, it will eventually be replaced with the differnt types of card playing functions (summon/cast/modify)
+    public void Play()
+    {
+        if (Target != null)
+        {
+            if (Target == PlayZone)
+            {
+                //Destroy card and send to graveyard/reparent
+                
+                //targeting = false;
+            }
+
+
+        }
+    }
+
     //this function has not yet been edited but will be used for summonign allies                                                                                                     !!!!!!!!!!!!!!!!!
     public void Summon()
     {
@@ -154,7 +253,7 @@ public class ThisCard : MonoBehaviour
         /* This function needs to check if the card is parented to the hand or is currently being dragged or the dropzone it is being dropped on has a sibling
          * if the card is not parent to the hand, is not being dragged, and has no siblings the ally can be summoned on the dropzone
          * If it is determined that the card can be summoned on the dropzone the card needs to be destroyed  after it is dropped and a new object needs to be spawned as a child of the dropzone
-         * effects will need to be resolved based on if the card has any
+         * effects will need to be resolved based on if the card has any effects
          * APPLIES TO ALL TYPES: mana value for current mana will need to be decrimented
          * a seperate function may need to be called to determine which sprite is being spawned
          */
@@ -162,10 +261,10 @@ public class ThisCard : MonoBehaviour
         //below is what this function originally did/does
         TurnSystem.currentMana -= cost;
         summoned = true;
-
+        canBeDestroyed = true;
         MaxMana(addXmaxMana);
         drawX = drawXcards;
-
+        //Destroy();
     }
 
     public void Cast()
@@ -190,4 +289,62 @@ public class ThisCard : MonoBehaviour
     {
         TurnSystem.maxMana += x;
     }
+
+    public void Destroy()
+    {
+        DiscardZone = GameObject.Find("Discard Panel");
+        
+        if (canBeDestroyed == true)
+        {
+            this.transform.SetParent(DiscardZone.transform);
+            canBeDestroyed = false;
+            summoned = false;
+            beInDiscardZone = true;
+        }
+    }
+
+    public void UntargetPlayZone()
+    {
+        staticTargetingPlayZone = false;
+    }
+    public void TargetPlayZone()
+    {
+        staticTargetingPlayZone = true;
+    }
+    public void StartPlay()
+    {
+        staticTargeting = true;
+    }
+    public void StopPlay()
+    {
+        staticTargeting = false;
+
+    }
+    public void OneCardPlay()
+    {
+        onlyThisCardPlay = true;
+    }
+    public void OneCardPlayStop()
+    {
+        onlyThisCardPlay = false;
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Instead of canAttack and cantAttack(?) use IsInDropzone or something similar
