@@ -37,6 +37,7 @@ public class ThisCard : MonoBehaviour
     public bool summoned;
     public GameObject battleZone;
 
+    public bool canBeTarget;
 
     public GameObject turnobject;
 
@@ -58,10 +59,18 @@ public class ThisCard : MonoBehaviour
 
     //initialization variables for playing cards////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public GameObject Target;
-    public GameObject PlayZone;
+    public GameObject PlayZone1;
+    public GameObject PlayZone2;
+    public GameObject PlayZone3;
+    public GameObject PlayZone4;
+    public GameObject PlayZoneBorder;
+    public int PlayZoneTargetNum;
 
     public static bool staticTargeting;
-    public static bool staticTargetingPlayZone;
+    public static bool staticTargetingPlayZone1;
+    public static bool staticTargetingPlayZone2;
+    public static bool staticTargetingPlayZone3;
+    public static bool staticTargetingPlayZone4;
 
     public bool targeting;
     public bool targetingPlayZone;
@@ -81,6 +90,7 @@ public class ThisCard : MonoBehaviour
         numberOfCardsInDeck = PlayerDeck.deckSize;
 
         canBeSummon = false;
+        canBeTarget = false;
         summoned = false;
 
         drawX = 0;
@@ -88,7 +98,7 @@ public class ThisCard : MonoBehaviour
         targeting = false;
         targetingPlayZone = false;
 
-        PlayZone = GameObject.Find("PlayZone");
+
     }
 
     // Update is called once per frame
@@ -198,16 +208,40 @@ public class ThisCard : MonoBehaviour
         //}
         targeting = staticTargeting;
 
-        targetingPlayZone = staticTargetingPlayZone;
-
-        //determines if the cards target is a playzone
-        if (targetingPlayZone == true)
+        if (staticTargetingPlayZone1 == true)
         {
-            Target = PlayZone;
+            targetingPlayZone = staticTargetingPlayZone1;
+            Target = GameObject.Find("PlayZone1");
+
+        } else if (staticTargetingPlayZone2 == true) 
+        {
+            targetingPlayZone = staticTargetingPlayZone2;
+            Target = GameObject.Find("PlayZone2");
+
+        } else if (staticTargetingPlayZone3 == true)
+        {
+            targetingPlayZone = staticTargetingPlayZone3;
+            Target = GameObject.Find("PlayZone3");
+
+        } else if (staticTargetingPlayZone4 == true)
+        {
+            targetingPlayZone = staticTargetingPlayZone4;
+            Target = GameObject.Find("PlayZone4");
         } else
         {
             Target = null;
         }
+
+        
+
+        //determines if the cards target is a playzone
+        //if (targetingPlayZone == true)
+        //{
+        //    Target = PlayZone;
+        //} else
+        //{
+        //    Target = null;
+        //}
 
         //determines if the summoning border is active------------------------------------------------------------------------------------------------
         if (canBeSummon == true)
@@ -224,7 +258,7 @@ public class ThisCard : MonoBehaviour
             Play();
         }
 
-        if (targeting == false && Target == PlayZone)
+        if (targeting == false && Target != null)
         {
             Destroy();
         }
@@ -235,7 +269,7 @@ public class ThisCard : MonoBehaviour
     {
         if (Target != null)
         {
-            if (Target == PlayZone)
+            if (Target == PlayZone1)
             {
                 //Destroy card and send to graveyard/reparent
                 
@@ -305,11 +339,36 @@ public class ThisCard : MonoBehaviour
 
     public void UntargetPlayZone()
     {
-        staticTargetingPlayZone = false;
+
+        staticTargetingPlayZone1 = false;
     }
     public void TargetPlayZone()
     {
-        staticTargetingPlayZone = true;
+        staticTargetingPlayZone1 = true;
+    }
+    public void UntargetPlayZone2()
+    {
+        staticTargetingPlayZone2 = false;
+    }
+    public void TargetPlayZone2()
+    {
+        staticTargetingPlayZone2 = true;
+    }
+    public void UntargetPlayZone3()
+    {
+        staticTargetingPlayZone3 = false;
+    }
+    public void TargetPlayZone3()
+    {
+        staticTargetingPlayZone3 = true;
+    }
+    public void UntargetPlayZone4()
+    {
+        staticTargetingPlayZone4 = false;
+    }
+    public void TargetPlayZone4()
+    {
+        staticTargetingPlayZone4 = true;
     }
     public void StartPlay()
     {
