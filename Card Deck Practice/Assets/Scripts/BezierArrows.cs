@@ -108,7 +108,7 @@ public class BezierArrows : MonoBehaviour
 
             if (i > 0)
             {
-                var euler = new Vector3(0, 0, Vector2.SignedAngle(Vector2.up, this.arrowNodes[i].position = this.arrowNodes[i - 1].position));
+                var euler = new Vector3(0, 0, Vector2.SignedAngle(Vector2.up, this.arrowNodes[i].position - this.arrowNodes[i - 1].position));
                 this.arrowNodes[i].rotation = Quaternion.Euler(euler);
             }
 

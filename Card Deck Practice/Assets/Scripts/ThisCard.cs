@@ -35,6 +35,7 @@ public class ThisCard : MonoBehaviour
     //card summoning conditional variables and parameters initialization
     public bool canBeSummon;
     public bool summoned;
+    public bool legalTarget;
     public GameObject battleZone;
 
     public bool canBeTarget;
@@ -63,7 +64,10 @@ public class ThisCard : MonoBehaviour
     public GameObject PlayZone2;
     public GameObject PlayZone3;
     public GameObject PlayZone4;
-    public GameObject PlayZoneBorder;
+    public GameObject PlayZoneBorder1;
+    public GameObject PlayZoneBorder2;
+    public GameObject PlayZoneBorder3;
+    public GameObject PlayZoneBorder4;
     public int PlayZoneTargetNum;
 
     public static bool staticTargeting;
@@ -92,12 +96,26 @@ public class ThisCard : MonoBehaviour
         canBeSummon = false;
         canBeTarget = false;
         summoned = false;
+        legalTarget = false;
 
         drawX = 0;
 
         targeting = false;
         targetingPlayZone = false;
 
+        PlayZoneBorder1 = GameObject.Find("PlayZoneBorder1");
+        PlayZoneBorder1.GetComponent<Image>().fillCenter = false;
+        PlayZoneBorder2 = GameObject.Find("PlayZoneBorder2");
+        PlayZoneBorder2.GetComponent<Image>().fillCenter = false;
+        PlayZoneBorder3 = GameObject.Find("PlayZoneBorder3");
+        PlayZoneBorder3.GetComponent<Image>().fillCenter = false;
+        PlayZoneBorder4 = GameObject.Find("PlayZoneBorder4");
+        PlayZoneBorder4.GetComponent<Image>().fillCenter = false;
+
+        PlayZone1 = GameObject.Find("PlayZone1");
+        PlayZone2 = GameObject.Find("PlayZone2");
+        PlayZone3 = GameObject.Find("PlayZone3");
+        PlayZone4 = GameObject.Find("PlayZone4");
 
     }
 
@@ -173,10 +191,14 @@ public class ThisCard : MonoBehaviour
         }
 
         battleZone = GameObject.Find("Dropzone");
+        legalTarget = true;
         //TurnObject = GameObject.Find("TurnSystem");
         //Conditional: calls the SUMMON function if a card has been dragged onto the dropzone gameobject
-        if (summoned == false && this.transform.parent == battleZone.transform)
+        if (summoned == false && legalTarget == true)
         {
+            if (this.transform.parent == battleZone.transform || this.transform.parent == PlayZone1.transform || this.transform.parent == PlayZone2.transform ||
+                this.transform.parent == PlayZone3.transform || this.transform.parent == PlayZone4.transform)
+            
             Summon();
         }
 
@@ -212,27 +234,53 @@ public class ThisCard : MonoBehaviour
         {
             targetingPlayZone = staticTargetingPlayZone1;
             Target = GameObject.Find("PlayZone1");
+            PlayZoneBorder1.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+            PlayZoneBorder2.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder3.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder4.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
 
         } else if (staticTargetingPlayZone2 == true) 
         {
             targetingPlayZone = staticTargetingPlayZone2;
             Target = GameObject.Find("PlayZone2");
+            PlayZoneBorder1.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder2.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+            PlayZoneBorder3.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder4.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
 
         } else if (staticTargetingPlayZone3 == true)
         {
             targetingPlayZone = staticTargetingPlayZone3;
             Target = GameObject.Find("PlayZone3");
+            PlayZoneBorder1.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder2.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder3.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+            PlayZoneBorder4.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+
 
         } else if (staticTargetingPlayZone4 == true)
         {
             targetingPlayZone = staticTargetingPlayZone4;
             Target = GameObject.Find("PlayZone4");
-        } else
+            PlayZoneBorder1.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder2.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder3.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder4.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
+        } else if (targeting == true)
         {
             Target = null;
+            PlayZoneBorder1.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder2.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder3.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+            PlayZoneBorder4.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+
         }
 
-        
+        if (Target == null)
+        {
+            targetingPlayZone = false;
+        }
+
 
         //determines if the cards target is a playzone
         //if (targetingPlayZone == true)
@@ -261,6 +309,15 @@ public class ThisCard : MonoBehaviour
         if (targeting == false && Target != null)
         {
             Destroy();
+            PlayZoneBorder1.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            PlayZoneBorder2.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            PlayZoneBorder3.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            PlayZoneBorder4.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+
+        if (this.transform.parent != Hand.transform && summoned == false)
+        {
+            //this.transform.parent = battleZone.transform; ----------------------------------------
         }
     }
 
@@ -387,7 +444,22 @@ public class ThisCard : MonoBehaviour
     {
         onlyThisCardPlay = false;
     }
-    
+
+    public void OnClick()
+    {
+        Debug.Log("OnClick");
+
+        this.transform.position = new Vector3(this.transform.position.x + 15.0f, this.transform.position.y + 30.0f, this.transform.position.z);
+
+    }
+    public void OnRelease()
+    {
+        Debug.Log("OnRelease");
+
+        this.transform.position = new Vector3(this.transform.position.x - 15.0f, this.transform.position.y - 30.0f, this.transform.position.z);
+        //come back to this border stuff
+        //this.transform.border.color = new Vector3(this.transform.position.x-15.0f, this.transform.position.y-30.0f,this.transform.position.z);
+    }
 }
 
 
