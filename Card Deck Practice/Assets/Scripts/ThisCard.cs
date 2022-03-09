@@ -315,9 +315,11 @@ public class ThisCard : MonoBehaviour
             PlayZoneBorder4.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
 
-        if (this.transform.parent != Hand.transform && summoned == false)
+        if (this.transform.parent == battleZone.transform && summoned == false)
         {
-            //this.transform.parent = battleZone.transform; ----------------------------------------
+            //this.transform.parent = battleZone.transform; ----------------------------------------SetParent
+            this.transform.SetParent(battleZone.transform);
+            gameObject.GetComponent<Draggable>().enabled = false;
         }
     }
 

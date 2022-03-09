@@ -90,8 +90,8 @@ public class BezierArrows : MonoBehaviour
         // P1, P2 determines by P0 and P3;
         // P1 = P0 + (P3 - P0) * Vector2(-0.3f, 0.8f)
         // P2 = P0 + (P3 - P0) * Vector2(0.1f, 1.4f)
-        this.controlPoints[1] = this.controlPoints[0] + (this.controlPoints[3] - this.controlPoints[0] * this.controlPointFactors[0]);/////////////////////////////////////////////
-        this.controlPoints[2] = this.controlPoints[0] + (this.controlPoints[3] - this.controlPoints[0] * this.controlPointFactors[1]);
+        this.controlPoints[1] = this.controlPoints[0] + (this.controlPoints[3] - this.controlPoints[0]) * this.controlPointFactors[0];/////////////////////////////////////////////
+        this.controlPoints[2] = this.controlPoints[0] + (this.controlPoints[3] - this.controlPoints[0]) * this.controlPointFactors[1];
 
         for (int i = 0; i < this.arrowNodes.Count; ++i)
         {
