@@ -10,6 +10,15 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 	public Transform placeholderParent = null;
 
 	GameObject placeholder = null;
+	public GameObject queueZone;
+
+	public static bool staticIntoPlay;
+	public bool intoPlay = false;
+
+	void Start()
+	{
+		queueZone = GameObject.Find("Dropzone");
+	}
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
@@ -30,13 +39,29 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 		this.transform.SetParent(this.transform.parent.parent);
 
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+		//	gameObject.GetComponent<BezierArrows>().enabled = true;
 	}
 
 	public void OnDrag(PointerEventData eventData)
 	{
 		//Debug.Log ("OnDrag");
 
-		this.transform.position = eventData.position;
+		intoPlay = staticIntoPlay;
+
+		if (intoPlay == true)
+		{
+			this.transform.position = queueZone.transform.position;
+			if (gameObject.GetComponent<BezierArrows>().enabled == false)
+				gameObject.GetComponent<BezierArrows>().enabled = true;
+		}
+		else
+		{
+			this.transform.position = eventData.position;
+			gameObject.GetComponent<BezierArrows>().test = true;
+		}
+
+
 
 		if (placeholder.transform.parent != placeholderParent)
 			placeholder.transform.SetParent(placeholderParent);
@@ -64,13 +89,27 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 	public void OnEndDrag(PointerEventData eventData)
 	{
 		Debug.Log("OnEndDrag");
+
+		//gameObject.GetComponent<BezierArrows>().enabled = true;
+		//gameObject.GetComponent<BezierArrows>().enabled = false;
+
 		this.transform.SetParent(parentToReturnTo);
 		this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
-		GetComponent<CanvasGroup>().blocksRaycasts = true;
+		//GetComponent<CanvasGroup>().blocksRaycasts = true;
 
 		Destroy(placeholder);
+
 	}
 
+	public void DragIntoPlay()
+	{
+		staticIntoPlay = true;
+	}
+
+	public void DragOutOfPlay()
+	{
+		staticIntoPlay = false;
+	}
 
 
 }

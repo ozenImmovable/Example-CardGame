@@ -1311,6 +1311,7 @@ MonoBehaviour:
   ArrowNodePrefab: {fileID: 9028834947561937426, guid: eca2c221b8ff09d4b9ecef742a9190f8, type: 3}
   arrowNodeNum: 10
   scaleFactor: 1.8
+  test: 0
 --- !u!1 &671188376 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1007266760903768920, guid: 2922cf49502c4de49bfa2943a691c166, type: 3}
@@ -1996,6 +1997,7 @@ GameObject:
   - component: {fileID: 943727601}
   - component: {fileID: 943727600}
   - component: {fileID: 943727603}
+  - component: {fileID: 943727604}
   m_Layer: 5
   m_Name: Dropzone
   m_TagString: Untagged
@@ -2019,8 +2021,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -13, y: -38.547}
-  m_SizeDelta: {x: -1735.2673, y: -822.14}
+  m_AnchoredPosition: {x: -24.261, y: -42.378}
+  m_SizeDelta: {x: -1678.8087, y: -778.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &943727600
 MonoBehaviour:
@@ -2087,6 +2089,51 @@ CanvasRenderer:
   m_GameObject: {fileID: 943727598}
   m_CullTransparentMesh: 1
 --- !u!114 &943727603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943727598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 9042084919935672941, guid: d22a9907c72cdf24690eac27a4a10c61, type: 3}
+          m_TargetAssemblyTypeName: Draggable, Assembly-CSharp
+          m_MethodName: DragIntoPlay
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 9042084919935672941, guid: d22a9907c72cdf24690eac27a4a10c61, type: 3}
+          m_TargetAssemblyTypeName: Draggable, Assembly-CSharp
+          m_MethodName: DragOutOfPlay
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &943727604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2566,7 +2613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 512, y: -37.999958}
+  m_AnchoredPosition: {x: 512, y: -38}
   m_SizeDelta: {x: -1661.6726, y: -923.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1106204704
@@ -3448,7 +3495,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.5369873, y: -363.88345}
+  m_AnchoredPosition: {x: 1.5371094, y: -363.88342}
   m_SizeDelta: {x: -765.4503, y: -727.7668}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1704360372

@@ -10,56 +10,61 @@ public class ThisCard : MonoBehaviour
     public List<Card> thisCard = new List<Card>();
     public int thisId;
 
+    //card values, taken from database
     public int id;
     public string cardName;
     public int cost;
     public int power;
     public string cardDescription;
 
+    //cardtype storage variable, currently unused, but contains a value in the database
+    public string cardType;
+
+    //Visible card values taken from above values
     public Text nameText;
     public Text costText;
     public Text powerText;
     public Text descriptionText;
 
+    //Card Image, determined from database
     public Sprite thisSprite;
     public Image thatImage;
+
+    //Cardback variables
     //public Image frame; Only if  I want to change the frame color (Tutorial #04)
     public bool cardBack;
-    //public static bool staticCardBack; //removed due to card linking
-
     CardBack CardBackScript;
 
+    //Gameobject to be used to store the Hand gameobject for use in the script
     public GameObject Hand;
+
+    //card to keep track of the number of cards in the player deck
     public int numberOfCardsInDeck;
 
-    //card summoning conditional variables and parameters initialization
+    //Card summoning conditional variables and parameters initialization
     public bool canBeSummon;
     public bool summoned;
-    public bool legalTarget;
+    public bool legalTarget; //defaulted to true, plan or future use
     public GameObject battleZone;
 
-    public bool canBeTarget;
+    public bool canBeTarget; //initialized in start but not used
 
-    public GameObject turnobject;
-
-
+    //Variable to determine how many cards are to be drawn
     public static int drawX;
+
+    //variables for sepcial effects, populated from the card database
     public int drawXcards;
     public int addXmaxMana;
-
-
-    //public GameObject TurnObject;
-
-    //cardtype storage variable
-    public string cardType;
 
     //Graveyard initialization and card destroying variables
     public bool canBeDestroyed;
     public GameObject DiscardZone;
     public bool beInDiscardZone;
 
-    //initialization variables for playing cards////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //variable for keeping track of the gameobject you are currently targetting when dragging a card
     public GameObject Target;
+
+    //GameObject variables to keep track of the different playzones and their borders
     public GameObject PlayZone1;
     public GameObject PlayZone2;
     public GameObject PlayZone3;
@@ -68,8 +73,9 @@ public class ThisCard : MonoBehaviour
     public GameObject PlayZoneBorder2;
     public GameObject PlayZoneBorder3;
     public GameObject PlayZoneBorder4;
-    public int PlayZoneTargetNum;
+    public int PlayZoneTargetNum; //unused, possibly was meant for a switch statement but didnt work out
 
+    //variables
     public static bool staticTargeting;
     public static bool staticTargetingPlayZone1;
     public static bool staticTargetingPlayZone2;
@@ -78,6 +84,9 @@ public class ThisCard : MonoBehaviour
 
     public bool targeting;
     public bool targetingPlayZone;
+
+    public bool hovering;
+    public static bool staticHovering;
 
     //not sure if below variable is needed
     public bool onlyThisCardPlay;
@@ -117,6 +126,8 @@ public class ThisCard : MonoBehaviour
         PlayZone3 = GameObject.Find("PlayZone3");
         PlayZone4 = GameObject.Find("PlayZone4");
 
+        gameObject.GetComponent<BezierArrows>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -146,20 +157,15 @@ public class ThisCard : MonoBehaviour
         powerText.text = "" + power;
         descriptionText.text = "" + cardDescription;
 
-        //cardtype initializing and storage, case might go here
-
-        //need to populate conditionally based off card id and type?
-        //maybe just off card id?
-        //is it even necessary to have multiple databases?
-
-
-        cardType = thisCard[0].cardType;                            /////////////////////////////
-
+        cardType = thisCard[0].cardType;                            
 
         thatImage.sprite = thisSprite;
 
-        //staticCardBack = cardBack; //removed due to card linking
         CardBackScript.UpdateCard(cardBack);
+
+        battleZone = GameObject.Find("Dropzone");
+
+        
 
         if (this.tag == "Clone")
         {
@@ -184,25 +190,36 @@ public class ThisCard : MonoBehaviour
         if (canBeSummon == true)
         {
             gameObject.GetComponent<Draggable>().enabled = true;
+            
         }
-        else
+        else 
         {
             gameObject.GetComponent<Draggable>().enabled = false;
+            //this.transform.parent = battleZone.transform;
+            
         }
 
-        battleZone = GameObject.Find("Dropzone");
+        
         legalTarget = true;
-        //TurnObject = GameObject.Find("TurnSystem");
+
         //Conditional: calls the SUMMON function if a card has been dragged onto the dropzone gameobject
         if (summoned == false && legalTarget == true)
         {
-            if (this.transform.parent == battleZone.transform || this.transform.parent == PlayZone1.transform || this.transform.parent == PlayZone2.transform ||
+            if (this.transform.parent == PlayZone1.transform || this.transform.parent == PlayZone2.transform ||
                 this.transform.parent == PlayZone3.transform || this.transform.parent == PlayZone4.transform)
+            {
+                Summon();
+            }
             
-            Summon();
+            
+            
         }
 
-        //NEW: switch statement
+        if(this.transform.parent == battleZone.transform)
+        {
+            gameObject.GetComponent<BezierArrows>().enabled = true;
+        }
+        
 
         //copied if statement from directly above in order to check if the card is being moved around from the hand zone to somewhre else
         //if (summoned == false && modified== false && casted == false && this.transform.parent == battleZone.transform)
@@ -210,25 +227,28 @@ public class ThisCard : MonoBehaviour
         //    Summon();
         //}
 
-        //maybe use arguments to tell which card it is by its ID? is that redundant, discussion required
-        //switch (cardType)
-        //{
-        //    case "ally":
-        //        Debug.Log("ENTERED ALLY CASE");
-        //        if (summoned == true && Input.GetMouseButtonUp(0))
-        //        {
-        //            Destroy();
-        //        }
-        //        break;
-        //    case "material":
-        //        Debug.Log("ENTERED MATERIAL CASE");
-        //        break;
-        //    case "spell":
-        //        Debug.Log("ENTERED SPELL CASE");
-        //        break;
+        //determines if the summoning border is active------------------------------------------------------------------------------------------------
+        if (canBeSummon == true)
+        {
+            summonBorder.SetActive(true);
+            
+        }
+        else
+        {
+            summonBorder.SetActive(false);
+            
+        }
 
-        //}
+
         targeting = staticTargeting;
+        if (targeting == false)
+        {
+            hovering = staticHovering;
+        }
+        
+        
+        targeting = staticTargeting;
+        targetingPlayZone = false;
 
         if (staticTargetingPlayZone1 == true)
         {
@@ -266,7 +286,7 @@ public class ThisCard : MonoBehaviour
             PlayZoneBorder2.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
             PlayZoneBorder3.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
             PlayZoneBorder4.GetComponent<Image>().color = new Color32(0, 255, 0, 255);
-        } else if (targeting == true)
+        } else if (targeting == true )
         {
             Target = null;
             PlayZoneBorder1.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
@@ -274,11 +294,12 @@ public class ThisCard : MonoBehaviour
             PlayZoneBorder3.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
             PlayZoneBorder4.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
 
-        }
-
-        if (Target == null)
+        } else
         {
-            targetingPlayZone = false;
+            PlayZoneBorder1.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            PlayZoneBorder2.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            PlayZoneBorder3.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            PlayZoneBorder4.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
 
 
@@ -291,14 +312,7 @@ public class ThisCard : MonoBehaviour
         //    Target = null;
         //}
 
-        //determines if the summoning border is active------------------------------------------------------------------------------------------------
-        if (canBeSummon == true)
-        {
-            summonBorder.SetActive(true);
-        } else
-        {
-            summonBorder.SetActive(false);
-        }
+        
 
         //this allows the card to be played from the Dropzone to a playzone
         if (targeting == true && targetingPlayZone == true && onlyThisCardPlay == true)
@@ -317,7 +331,6 @@ public class ThisCard : MonoBehaviour
 
         if (this.transform.parent == battleZone.transform && summoned == false)
         {
-            //this.transform.parent = battleZone.transform; ----------------------------------------SetParent
             this.transform.SetParent(battleZone.transform);
             gameObject.GetComponent<Draggable>().enabled = false;
         }
@@ -446,6 +459,18 @@ public class ThisCard : MonoBehaviour
     {
         onlyThisCardPlay = false;
     }
+    public void OneCardHover()
+    {
+        //staticHovering = true;
+        staticTargeting = false;
+    }
+
+    public void OneCardStopHover()
+    {
+        //staticHovering = false;
+        staticTargeting = false;
+    }
+
 
     public void OnClick()
     {

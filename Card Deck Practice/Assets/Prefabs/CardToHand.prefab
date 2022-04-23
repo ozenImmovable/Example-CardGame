@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 9042084919935672941}
   - component: {fileID: 3259665752402722206}
   - component: {fileID: 6026262448422807639}
+  - component: {fileID: -1363864771645250905}
   m_Layer: 5
   m_Name: CardToHand
   m_TagString: Clone
@@ -274,7 +275,9 @@ MonoBehaviour:
   numberOfCardsInDeck: 0
   canBeSummon: 0
   summoned: 0
+  legalTarget: 0
   battleZone: {fileID: 0}
+  canBeTarget: 0
   turnobject: {fileID: 0}
   drawXcards: 0
   addXmaxMana: 0
@@ -283,9 +286,18 @@ MonoBehaviour:
   DiscardZone: {fileID: 0}
   beInDiscardZone: 0
   Target: {fileID: 0}
-  PlayZone: {fileID: 0}
+  PlayZone1: {fileID: 0}
+  PlayZone2: {fileID: 0}
+  PlayZone3: {fileID: 0}
+  PlayZone4: {fileID: 0}
+  PlayZoneBorder1: {fileID: 0}
+  PlayZoneBorder2: {fileID: 0}
+  PlayZoneBorder3: {fileID: 0}
+  PlayZoneBorder4: {fileID: 0}
+  PlayZoneTargetNum: 0
   targeting: 0
   targetingPlayZone: 0
+  hovering: 0
   onlyThisCardPlay: 0
   summonBorder: {fileID: 388158322370451577}
 --- !u!114 &6311986156969592555
@@ -374,22 +386,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 12
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4502565618654004882}
-          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
-          m_MethodName: StartPlay
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 14
     callback:
       m_PersistentCalls:
@@ -424,18 +420,6 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 4502565618654004882}
           m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
-          m_MethodName: StartPlay
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 4502565618654004882}
-          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
           m_MethodName: OneCardPlay
           m_Mode: 1
           m_Arguments:
@@ -446,6 +430,86 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 5
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4502565618654004882}
+          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
+          m_MethodName: StartPlay
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 12
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4502565618654004882}
+          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
+          m_MethodName: StopPlay
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4502565618654004882}
+          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
+          m_MethodName: StopPlay
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4502565618654004882}
+          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
+          m_MethodName: StopPlay
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &-1363864771645250905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060346146484869953}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b8e79f68ec33d4d8ea291c896f22e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrowHeadPrefab: {fileID: 2121525435739858941, guid: ba14c3ad36cd0b748bba386bf0ae9616, type: 3}
+  ArrowNodePrefab: {fileID: 9028834947561937426, guid: eca2c221b8ff09d4b9ecef742a9190f8, type: 3}
+  arrowNodeNum: 10
+  scaleFactor: 1.8
 --- !u!1 &9060346146928456596
 GameObject:
   m_ObjectHideFlags: 0

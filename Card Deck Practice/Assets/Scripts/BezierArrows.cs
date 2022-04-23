@@ -23,6 +23,8 @@ public class BezierArrows : MonoBehaviour
     [Tooltip("The scale multiplier for arrow nodes")]
     public float scaleFactor = 1f;
 
+    public bool test;
+
     #endregion
 
     #region Private Fields
@@ -83,7 +85,9 @@ public class BezierArrows : MonoBehaviour
     {
         // P0 is ate the arrow emitter point.
         this.controlPoints[0] = new Vector2(this.origin.position.x, this.origin.position.y);
-        
+
+        Debug.Log(test);
+
         // P3 is at the mouse position.
         this.controlPoints[3] = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 

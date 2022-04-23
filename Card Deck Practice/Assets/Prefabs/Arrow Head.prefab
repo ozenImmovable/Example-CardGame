@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7811390965901937310}
   - component: {fileID: 8372974584882312148}
   - component: {fileID: 3995082004807040032}
+  - component: {fileID: 1490394726199896401}
   m_Layer: 5
   m_Name: Arrow Head
   m_TagString: Untagged
@@ -75,3 +76,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1490394726199896401
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121525435739858941}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
