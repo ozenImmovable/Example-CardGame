@@ -126,7 +126,7 @@ public class ThisCard : MonoBehaviour
         PlayZone3 = GameObject.Find("PlayZone3");
         PlayZone4 = GameObject.Find("PlayZone4");
 
-        gameObject.GetComponent<BezierArrows>().enabled = false;
+        //gameObject.GetComponent<BezierArrows>().enabled = false;
 
     }
 
@@ -163,7 +163,7 @@ public class ThisCard : MonoBehaviour
 
         CardBackScript.UpdateCard(cardBack);
 
-        battleZone = GameObject.Find("Dropzone");
+        //battleZone = GameObject.Find("Dropzone");
 
         
 
@@ -215,10 +215,10 @@ public class ThisCard : MonoBehaviour
             
         }
 
-        if(this.transform.parent == battleZone.transform)
-        {
-            gameObject.GetComponent<BezierArrows>().enabled = true;
-        }
+        //if(this.transform.parent == battleZone.transform)
+        //{
+        //    //gameObject.GetComponent<BezierArrows>().enabled = true;
+        //}
         
 
         //copied if statement from directly above in order to check if the card is being moved around from the hand zone to somewhre else
@@ -329,10 +329,10 @@ public class ThisCard : MonoBehaviour
             PlayZoneBorder4.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
 
-        if (this.transform.parent == battleZone.transform && summoned == false)
+        if (/*this.transform.parent == battleZone.transform &&*/ summoned == false)
         {
-            this.transform.SetParent(battleZone.transform);
-            gameObject.GetComponent<Draggable>().enabled = false;
+            //this.transform.SetParent(battleZone.transform);
+            //gameObject.GetComponent<Draggable>().enabled = false;
         }
     }
 

@@ -80,13 +80,17 @@ public class BezierArrows : MonoBehaviour
     /// <summary>
     /// Executes every frame.
     /// </summary>
-    
+
     private void Update()
     {
         // P0 is ate the arrow emitter point.
         this.controlPoints[0] = new Vector2(this.origin.position.x, this.origin.position.y);
 
-        Debug.Log(test);
+        //Debug.Log(test);
+        if (test == true)
+        {
+            this.arrowNodes.ForEach(a => a.GetComponent<RectTransform>().position = new Vector2(-1000, -1000));
+        }
 
         // P3 is at the mouse position.
         this.controlPoints[3] = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
